@@ -8,7 +8,15 @@ SRC_DIR=src
 
 OBJ_DIR=obj
 
-SRCS=	vector_utils.c \
+LIBFTDIR=libft
+LIBFT=$(LIBFTDIR)/libft.a
+LIBFT_INCLUDE=-I$(LIBFTDIR)
+LIBFT_LINK=-L$(LIBFTDIR) -lft
+
+SRCS=	get_next_line.c \
+		get_next_line_utils.c \
+		vector_utils.c \
+		error_handling.c \
 		main.c
 
 OBJS=$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
@@ -17,19 +25,31 @@ MINILIB_DIR = minilibx-linux/
 LDFLAGS = -L$(MINILIB_DIR)
 LDLIBS = -lm -L/usr/X11R6/lib -L minilibx-linux -lmlx -lX11 -lXext -framework OpenGL -framework AppKit
 
+ifeq ($(MAKECMDGOAL), debug)
+	CC += -g -fsanitize=address
+endif
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LDLIBS) minilibx-linux/libmlx.a
+	@make -C $(LIBFTDIR)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LDLIBS) $(LIBFT_LINK) minilibx-linux/libmlx.a
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@ -I/includes/.
+	$(CC) $(CFLAGS) -c $< -o $@ -I/includes/. $(LIBFT_INCLUDE)
+
+$(LIBFT):
+	make -C $(LIBFTDIR)
 
 clean:
 	rm -rf $(OBJS)
+	make -C $(LIBFTDIR) clean
 
 fclean: clean
 	rm -rf $(NAME)
+	make -C $(LIBFTDIR) fclean
 
 re: fclean all
+
+debug: re
