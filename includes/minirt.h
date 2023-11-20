@@ -44,7 +44,7 @@ typedef struct s_world {
     int        screen_width;
     int        screen_height;
     t_dlist camera;  // カメラ
-    t_elem      *objects;  // 物体のリスト
+    t_elem      *objs;  // 物体のリスト
     t_fcolor    ambient;  // 環境光の強度
     t_elem      light;  // 光源
 }               t_world;
@@ -58,7 +58,7 @@ double         vec_dot(t_vec a, t_vec b);
 t_vec          vec_cross(t_vec a, t_vec b);
 double         vec_mag(t_vec a);
 t_vec          vec_normalize(t_vec a);
-int            get_vec_from_str(t_vec *vec, char *str);
+void            get_vec_from_str(t_vec *vec, char *str);
 
 /*error_handling*/
 void ft_error(char *log);
