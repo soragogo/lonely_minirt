@@ -1,39 +1,9 @@
 #include "../includes/minirt.h"
 #include "../includes/get_next_line.h"
 
-void get_vec_from_str(t_vec *vec, char *str)
-{
-    // 未実装
-    printf("vec: %s\n", str);
-    vec->x = 0.5;
-    vec->y = 0.5;
-    vec->z = 0.5;
-}
 
-double atod(char *str)
-{
-    //　未実装
-    printf("str: %s\n", str);
-    return (0.2);
-}
 
-void get_color_from_str(t_fcolor *color, char *str)
-{
-    // 未実装
-    printf("convert %s into RGB\n", str);
-    color->r = 100;
-    color->g = 100;
-    color->b = 100;
-}
 
-void free_matrix(char **matrix)
-{
-    int i = 0;
-    while (matrix[i])
-        free(matrix[i++]);
-    free(matrix);
-
-}
 
 void add_ambient(t_world *world, char *line, int count)
 {
@@ -51,6 +21,7 @@ void add_ambient(t_world *world, char *line, int count)
     //     printf("matrix[%d]: %s\n", i, matrix[i]);
     world->ambient.r = 0;
 }
+
 void add_camera(t_world *world, char *line, int count)
 {
     char **matrix;
@@ -60,8 +31,8 @@ void add_camera(t_world *world, char *line, int count)
     // for (int i = 0; matrix[i]; i++)
     //     printf("matrix[%d]: %s\n", i, matrix[i]);
     printf("Camera: %c\n", *line);
-    get_vec_from_str(&(world->camera.coor),matrix[1]);
-    get_vec_from_str(&(world->camera.vec),matrix[2]);
+    get_vec_from_str(&(world->camera.coor),matrix[1], 1);
+    get_vec_from_str(&(world->camera.vec),matrix[2], 0);
     world->camera.fov = ft_atoi(matrix[3]);
     free_matrix(matrix);
 }
@@ -73,7 +44,7 @@ void add_light(t_world *world, char *line, int count)
     matrix = ft_split(line, ' ');
     // for (int i = 0; matrix[i]; i++)
     //     printf("matrix[%d]: %s\n", i, matrix[i]);
-    get_vec_from_str(&(world->light.coor), matrix[1]);
+    get_vec_from_str(&(world->light.coor), matrix[1], 1);
     get_color_from_str(&(world->light.color), matrix[3]);
     world->light.color.r *= atod(matrix[1]);
     world->light.color.g *= atod(matrix[1]);
@@ -88,16 +59,37 @@ t_elem *find_last_obj(t_world *world)
     last_obj = world->objs;
     if (!last_obj)
         return (NULL);
-    while(last_obj)
+    while(last_obj->next != NULL)
     {
         last_obj = last_obj->next;
     }
+    return (last_obj);
 }
 
-void create_new_obj(t_world *world, char **matrix)
+void create_new_obj(t_elem *new_obj, char **matrix)
 {
-    // 未実装
-    ft_strlcpy(world->objs->obj, matrix[0], 3);
+    int color_idx;
+
+    ft_strlcpy(new_obj->obj, matrix[0], 3);
+    get_vec_from_str(&(new_obj->coor), matrix[1], 1);
+    if (!ft_strncmp(matrix[0], "sp", 2))
+    {
+        color_idx = 3;
+        new_obj->diam = atod(matrix[2]);
+    }
+    else if (!ft_strncmp(matrix[0], "pl", 2))
+    {
+        color_idx = 3;
+        get_vec_from_str(&(new_obj->vec), matrix[2], 0);
+    }
+    else
+    {
+        color_idx = 5;
+        get_vec_from_str(&(new_obj->vec), matrix[2], 0);
+        new_obj->diam = atod(matrix[3]);
+        new_obj->hgt = atod(matrix[3]);
+    }
+    get_color_from_str(&(new_obj->color), matrix[color_idx]);
 }
 
 void create_obj_list(t_world *world, char **matrix)
@@ -106,14 +98,15 @@ void create_obj_list(t_world *world, char **matrix)
     t_elem *new_obj;
 
     last_obj = find_last_obj(world);
-    new_obj = malloc(sizeof(t_elem));
+    new_obj = ft_calloc(sizeof(t_elem), 1);
     if (!new_obj)
         ft_error("Failed to allocate memomry");
     if (last_obj == NULL)
-        last_obj = new_obj;
+        world->objs = new_obj;
     else
         last_obj->next = new_obj;
-    create_new_obj(world,  matrix);
+    new_obj->next = NULL;
+    create_new_obj(new_obj,  matrix);
 }
 
 
@@ -157,7 +150,6 @@ void add_element(t_world *world, char *line, int *a_c_l)
         add_object(world, line);
     else
         ft_error("Improper name of element");
-
 }
 
 void add_elements(t_world *world, int fd)
@@ -195,25 +187,14 @@ void create_world_struct(t_world *world)
 {
     int fd;
 
+    world->objs = NULL;
     fd = open_scene("/Users/emukamada/Desktop/miniRT/scenes/test.rt");
     add_elements(world, fd);
     close(fd);
 
 }
 
-void clean_world_struct(t_world *world)
-{
-    t_elem *tmp;
 
-    tmp = world->objs;
-    while (world->objs)
-    {
-        tmp = world->objs->next;
-        free(world->objs);
-        world->objs = tmp;
-    }
-    free(world);
-}
 
 int main()
 {

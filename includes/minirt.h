@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 #include "../libft/libft.h"
 
@@ -32,6 +33,7 @@ typedef struct s_elem
 {
     char obj[3];
     t_vec coor;
+    t_vec vec;
     t_fcolor color;
     double diam;
     double hgt;
@@ -58,12 +60,23 @@ double         vec_dot(t_vec a, t_vec b);
 t_vec          vec_cross(t_vec a, t_vec b);
 double         vec_mag(t_vec a);
 t_vec          vec_normalize(t_vec a);
-void            get_vec_from_str(t_vec *vec, char *str);
+void            get_vec_from_str(t_vec *vec, char *str, int coor);
 
 /*error_handling*/
 void ft_error(char *log);
+void check_color_syntax(char *str);
+void check_vec_syntax(char *str);
+void check_comma_syntax(char *str);
 
+/*add_elements_utils*/
+double atod(char *str);
+void get_color_from_str(t_fcolor *color, char *str);
 
+/*free utils*/
+void clean_world_struct(t_world *world);
+void free_matrix(char **matrix);
 
+/*atod*/
+double atod(char *str);
 
 #endif

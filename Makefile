@@ -13,11 +13,14 @@ LIBFT=$(LIBFTDIR)/libft.a
 LIBFT_INCLUDE=-I$(LIBFTDIR)
 LIBFT_LINK=-L$(LIBFTDIR) -lft
 
-SRCS=	get_next_line.c \
-		get_next_line_utils.c \
-		vector_utils.c \
+SRCS=	add_elements_utils.c \
+		atod.c \
 		error_handling.c \
-		main.c
+		free_utils.c \
+		get_next_line.c \
+		get_next_line_utils.c \
+		main.c \
+		vector_utils.c
 
 OBJS=$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
@@ -52,4 +55,6 @@ fclean: clean
 
 re: fclean all
 
-debug: re
+debug: fclean $(OBJS)
+	@make -C $(LIBFTDIR)
+	$(CC) $(CFLAGS) -g -fsanitize=address $(LDFLAGS) -o $(NAME) $(OBJS) $(LDLIBS) $(LIBFT_LINK) minilibx-linux/libmlx.a

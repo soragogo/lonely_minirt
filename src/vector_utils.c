@@ -87,9 +87,3 @@ t_vec          vec_normalize(t_vec a)
     normal_a.z = a.z / mag;
     return (normal_a);
 }
-
-// int                get_vec_from_str(t_vec *vec, char *str)
-// {
-
-// }
-
