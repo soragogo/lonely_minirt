@@ -74,10 +74,32 @@ double atod(char *str);
 void get_color_from_str(t_fcolor *color, char *str);
 
 /*free utils*/
-void clean_world_struct(t_world *world);
+void clean_world(t_world *world);
 void free_matrix(char **matrix);
 
 /*atod*/
 double atod(char *str);
+
+/*init_world*/
+void init_world(t_world *world);
+
+/*read_map*/
+int open_scene(const char *file);
+void add_elements(t_world *world, int fd);
+void add_element(t_world *world, char *line, int *a_c_l);
+
+/*add_camera*/
+void add_camera(t_world *world, char *line, int count);
+/*add_light*/
+void add_light(t_world *world, char *line, int count);
+
+/*add_ambient*/
+void add_ambient(t_world *world, char *line, int count);
+
+/*add_objects*/
+void add_object(t_world *world, char *line);
+void create_obj_list(t_world *world, char **matrix);
+void create_new_obj(t_elem *new_obj, char **matrix);
+t_elem *find_last_obj(t_world *world);
 
 #endif

@@ -9,7 +9,7 @@ void free_matrix(char **matrix)
 
 }
 
-void clean_world_struct(t_world *world)
+void clean_world(t_world *world)
 {
     t_elem *tmp;
     t_elem *node;

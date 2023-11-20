@@ -13,13 +13,19 @@ LIBFT=$(LIBFTDIR)/libft.a
 LIBFT_INCLUDE=-I$(LIBFTDIR)
 LIBFT_LINK=-L$(LIBFTDIR) -lft
 
-SRCS=	add_elements_utils.c \
+SRCS=	 add_ambient.c \
+		add_camera.c \
+		add_elements_utils.c \
+		add_light.c \
+		add_objects.c \
 		atod.c \
 		error_handling.c \
 		free_utils.c \
 		get_next_line.c \
 		get_next_line_utils.c \
+		init_world.c \
 		main.c \
+		read_map.c \
 		vector_utils.c
 
 OBJS=$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
