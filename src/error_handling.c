@@ -7,11 +7,36 @@ void ft_error(char *log)
     exit (EXIT_FAILURE);
 }
 
+void check_period_syntax(char *str)
+{
+    int period_count;
+
+    period_count = 0;
+    printf("str: %s\n", str);
+    while (*str)
+    {
+        if (*str == '.')
+        {
+            if (*(str - 1) || *(str + 1))
+                ft_error("Vector or coordinate syntax error");
+            else if (!ft_isdigit(*(str - 1)) || !ft_isdigit(*(str + 1)))
+                ft_error("Vector or coordinate syntax error");
+            period_count ++;
+        }
+        if (*str == ',')
+            period_count = 0;
+        if (period_count > 1)
+            ft_error("Wrong_format");
+        str++;
+    }
+}
+
 void check_comma_syntax(char *str)
 {
     int comma_count;
 
     comma_count = 0;
+    printf("str: %s\n", str);
     while (*str)
     {
         if (*str == ',')
@@ -29,6 +54,7 @@ void check_vec_syntax(char *str)
 
     tmp = str;
     first = true;
+    printf("str: %s\n", str);
     check_comma_syntax(str);
     while (*tmp)
     {
@@ -36,10 +62,6 @@ void check_vec_syntax(char *str)
             ft_error("Vector or coordinate syntax error");
         else if (!ft_isdigit(*tmp)
             && *tmp != ',' && *tmp != '.' && *tmp != '-')
-            ft_error("Vector or coordinate syntax error");
-        if (*tmp == '.'
-            && *(tmp - 1) && ft_isdigit(*(tmp - 1))
-            && !*(tmp + 1)  &&  ft_isdigit(*(tmp + 1)))
             ft_error("Vector or coordinate syntax error");
         first = false;
         if (*tmp == ',')

@@ -31,24 +31,30 @@ void add_camera(t_world *world, char *line, int count)
     // for (int i = 0; matrix[i]; i++)
     //     printf("matrix[%d]: %s\n", i, matrix[i]);
     printf("Camera: %c\n", *line);
-    get_vec_from_str(&(world->camera.coor),matrix[1], 1);
-    get_vec_from_str(&(world->camera.vec),matrix[2], 0);
+    get_vec_from_str(&(world->camera.coor),matrix[1], 0);
+    get_vec_from_str(&(world->camera.vec),matrix[2], 1);
     world->camera.fov = ft_atoi(matrix[3]);
+    if (world->camera.fov < 0 || 180 < world->camera.fov)
+        ft_error("Camera FOV out of range");
     free_matrix(matrix);
 }
 void add_light(t_world *world, char *line, int count)
 {
     char **matrix;
+    double ratio;
     if (count > 1)
         ft_error("Light defined more than once");
     matrix = ft_split(line, ' ');
     // for (int i = 0; matrix[i]; i++)
     //     printf("matrix[%d]: %s\n", i, matrix[i]);
-    get_vec_from_str(&(world->light.coor), matrix[1], 1);
+    get_vec_from_str(&(world->light.coor), matrix[1], 0);
+    ratio = atod(matrix[2]);
+    if (ratio < 0 || 1 < ratio)
+        ft_error("Light brightness out of range");
     get_color_from_str(&(world->light.color), matrix[3]);
-    world->light.color.r *= atod(matrix[1]);
-    world->light.color.g *= atod(matrix[1]);
-    world->light.color.b *= atod(matrix[1]);
+    world->light.color.r *= atod(matrix[1]) * ratio;
+    world->light.color.g *= atod(matrix[1]) * ratio;
+    world->light.color.b *= atod(matrix[1]) * ratio;
     free_matrix(matrix);
 }
 
@@ -71,7 +77,7 @@ void create_new_obj(t_elem *new_obj, char **matrix)
     int color_idx;
 
     ft_strlcpy(new_obj->obj, matrix[0], 3);
-    get_vec_from_str(&(new_obj->coor), matrix[1], 1);
+    get_vec_from_str(&(new_obj->coor), matrix[1], 0);
     if (!ft_strncmp(matrix[0], "sp", 2))
     {
         color_idx = 3;
@@ -80,7 +86,7 @@ void create_new_obj(t_elem *new_obj, char **matrix)
     else if (!ft_strncmp(matrix[0], "pl", 2))
     {
         color_idx = 3;
-        get_vec_from_str(&(new_obj->vec), matrix[2], 0);
+        get_vec_from_str(&(new_obj->vec), matrix[2], 1);
     }
     else
     {

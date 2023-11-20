@@ -4,6 +4,7 @@
 #include <math.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <float.h>
 
 #include "../libft/libft.h"
 
@@ -60,7 +61,7 @@ double         vec_dot(t_vec a, t_vec b);
 t_vec          vec_cross(t_vec a, t_vec b);
 double         vec_mag(t_vec a);
 t_vec          vec_normalize(t_vec a);
-void            get_vec_from_str(t_vec *vec, char *str, int coor);
+void            get_vec_from_str(t_vec *vec, char *str, int is_vector);
 
 /*error_handling*/
 void ft_error(char *log);

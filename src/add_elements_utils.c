@@ -4,7 +4,7 @@
 
 
 
-void get_vec_from_str(t_vec *vec, char *str, int coor)
+void get_vec_from_str(t_vec *vec, char *str, int is_vector)
 {
     char *end;
     double val[3];
@@ -17,12 +17,12 @@ void get_vec_from_str(t_vec *vec, char *str, int coor)
         end = ft_strchr(str, ',');
         if (i == 2)
             end = str + strlen(str); // 文字列の終端を指すように設定
-        // printf("get color from this: %s\n", str);
+        printf("get vec from this: %s\n", str);
         printf("Get val from[%s]\n", str);
         val[i] = atod(str);
         printf("val[%d]: %f\n", i, val[i]);
-        if (coor && (val[i] < -1 || 1 < val[i]))
-            ft_error("Vectors or coordinates syntax error");
+        if (is_vector && (val[i] < -1 || 1 < val[i]))
+            ft_error("Vector or coordinate syntax error");
         if (end)
             str = end + 1;
         i++;
