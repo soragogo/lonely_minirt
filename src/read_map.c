@@ -28,7 +28,7 @@ void add_element(t_world *world, char *line, int *a_c_l)
 
 void add_elements(t_world *world, int fd)
 {
-    int lines = 0;
+    // int lines = 0;
     char *line = NULL;
     int a_c_l[3];
 
@@ -39,7 +39,7 @@ void add_elements(t_world *world, int fd)
     {
         if (!line[0])
             continue ;
-        printf("%d: [%s]\n", lines++, line);
+        // printf("%d: [%s]\n", lines++, line);
         add_element(world, line, a_c_l);
         free(line);
     }

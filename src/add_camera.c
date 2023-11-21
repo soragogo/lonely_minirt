@@ -8,7 +8,7 @@ void add_camera(t_world *world, char *line, int count)
     matrix = ft_split(line, ' ');
     // for (int i = 0; matrix[i]; i++)
     //     printf("matrix[%d]: %s\n", i, matrix[i]);
-    printf("Camera: %c\n", *line);
+    // printf("Camera: %c\n", *line);
     get_vec_from_str(&(world->camera.coor),matrix[1], 0);
     get_vec_from_str(&(world->camera.vec),matrix[2], 1);
     world->camera.fov = ft_atoi(matrix[3]);

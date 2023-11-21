@@ -22,7 +22,7 @@ double atod_itg(char **str)
         *str = tmp + 1;
     else
         *str = NULL;
-    printf("itg: %f\n", ret);
+    // printf("itg: %f\n", ret);
     return (ret);
 }
 
@@ -44,7 +44,7 @@ double atod_frct(char *str)
     ret /= 10;
     while (devide--)
         ret /= 10;
-    printf("frct: %f\n", ret);
+    // printf("frct: %f\n", ret);
     return (ret);
 }
 
@@ -62,7 +62,7 @@ double atod(char *str)
         minus = -1;
         str++;
     }
-    printf("atod before: %s\n", str);
+    // printf("atod before: %s\n", str);
     if (str == NULL || *str == '\0')
         ft_error("Wrong format");
     tmp = str;
@@ -70,7 +70,7 @@ double atod(char *str)
     if (tmp)
         ret += atod_frct(tmp);
     //　未実装
-    printf("str: %s\n", str);
-    printf("atod result: %f\n", minus * ret);
+    // printf("str: %s\n", str);
+    // printf("atod result: %f\n", minus * ret);
     return (minus * ret);
 }

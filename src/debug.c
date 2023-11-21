@@ -56,11 +56,11 @@ void print_objects(t_elem *list)
 
 void ft_debug(t_world world)
 {
-    puts("😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀");
+    puts("😀😀😀😀😀😀😀😀😀😀DEBUG😀😀😀😀😀😀😀😀😀😀");
     puts("Printing World Struct");
     print_camera(world.camera);
     print_ambient(world.ambient);
     print_light(world.light);
     print_objects(world.objs);
-    puts("😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀");
+    puts("😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀");
 }

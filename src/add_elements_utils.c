@@ -17,10 +17,10 @@ void get_vec_from_str(t_vec *vec, char *str, int is_vector)
         end = ft_strchr(str, ',');
         if (i == 2)
             end = str + strlen(str); // 文字列の終端を指すように設定
-        printf("get vec from this: %s\n", str);
-        printf("Get val from[%s]\n", str);
+        // // printf("get vec from this: %s\n", str);
+        // // printf("Get val from[%s]\n", str);
         val[i] = atod(str);
-        printf("val[%d]: %f\n", i, val[i]);
+        // // printf("val[%d]: %f\n", i, val[i]);
         if (is_vector && (val[i] < -1 || 1 < val[i]))
             ft_error("Vector or coordinate syntax error");
         if (end)
@@ -47,9 +47,9 @@ void get_color_from_str(t_fcolor *color, char *str)
         end = ft_strchr(str, ',');
         if (i == 2)
             end = str + strlen(str); // 文字列の終端を指すように設定
-        printf("get color from this: %s\n", str);
+        // printf("get color from this: %s\n", str);
         val[i] = ft_atoi(str);
-        printf("val[%d]: %d\n", i, val[i]);
+        // printf("val[%d]: %d\n", i, val[i]);
         if (val[i] < 0 || 255 < val[i])
             ft_error("Color syntax error");
         if (end)

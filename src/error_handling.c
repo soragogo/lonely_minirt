@@ -12,7 +12,7 @@ void check_period_syntax(char *str)
     int period_count;
 
     period_count = 0;
-    printf("str: %s\n", str);
+    // printf("str: %s\n", str);
     while (*str)
     {
         if (*str == '.')
@@ -36,7 +36,7 @@ void check_comma_syntax(char *str)
     int comma_count;
 
     comma_count = 0;
-    printf("str: %s\n", str);
+    // printf("str: %s\n", str);
     while (*str)
     {
         if (*str == ',')
@@ -54,7 +54,7 @@ void check_vec_syntax(char *str)
 
     tmp = str;
     first = true;
-    printf("str: %s\n", str);
+    // printf("str: %s\n", str);
     check_comma_syntax(str);
     check_period_syntax(str);
     while (*tmp)
