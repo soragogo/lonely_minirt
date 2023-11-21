@@ -17,7 +17,7 @@ void check_period_syntax(char *str)
     {
         if (*str == '.')
         {
-            if (*(str - 1) || *(str + 1))
+            if (!*(str - 1) || !*(str + 1))
                 ft_error("Vector or coordinate syntax error");
             else if (!ft_isdigit(*(str - 1)) || !ft_isdigit(*(str + 1)))
                 ft_error("Vector or coordinate syntax error");
@@ -56,6 +56,7 @@ void check_vec_syntax(char *str)
     first = true;
     printf("str: %s\n", str);
     check_comma_syntax(str);
+    check_period_syntax(str);
     while (*tmp)
     {
         if (*tmp == '-' && !first)
