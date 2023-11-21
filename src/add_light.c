@@ -15,8 +15,8 @@ void add_light(t_world *world, char *line, int count)
     if (ratio < 0 || 1 < ratio)
         ft_error("Light brightness out of range");
     get_color_from_str(&(world->light.color), matrix[3]);
-    world->light.color.r *= atod(matrix[1]) * ratio;
-    world->light.color.g *= atod(matrix[1]) * ratio;
-    world->light.color.b *= atod(matrix[1]) * ratio;
+    world->light.color.r *= ratio;
+    world->light.color.g *= ratio;
+    world->light.color.b *= ratio;
     free_matrix(matrix);
 }
