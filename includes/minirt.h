@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <float.h>
+#include <../minilibx-linux/mlx.h>
 
 #include "../libft/libft.h"
 
@@ -44,13 +45,24 @@ typedef struct s_elem
 typedef struct s_world {
     void       *mlx;  // minilibx特有のやつ
     void       *win;  // minilibxのウィンドウを指すポインタ
-    int        screen_width;
-    int        screen_height;
+    int        win_w;
+    int        win_h;
     t_dlist camera;  // カメラ
     t_elem      *objs;  // 物体のリスト
     t_fcolor    ambient;  // 環境光の強度
     t_elem      light;  // 光源
 }               t_world;
+
+typedef struct	s_data {
+    void       *mlx;
+    void       *win;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
+
 
 /*vector*/
 t_vec          vec_init(double x, double y, double z);
@@ -101,6 +113,13 @@ void add_object(t_world *world, char *line);
 void create_obj_list(t_world *world, char **matrix);
 void create_new_obj(t_elem *new_obj, char **matrix);
 t_elem *find_last_obj(t_world *world);
+
+/*init minilibx*/
+void init_minilibx(t_world *world, t_data *img);
+
+/*event_hook*/
+void event_hook(t_data *img);
+
 
 /*debug*/
 void ft_debug(t_world world);
