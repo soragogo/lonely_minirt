@@ -5,6 +5,7 @@ int main()
 {
     t_world world;
     init_world(&world);
+    ft_debug(world);
     clean_world(&world);
     system("leaks -q miniRT");
     return (0);

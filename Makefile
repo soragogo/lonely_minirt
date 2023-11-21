@@ -26,6 +26,7 @@ SRCS=	 add_ambient.c \
 		init_world.c \
 		main.c \
 		read_map.c \
+		debug.c \
 		vector_utils.c
 
 OBJS=$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

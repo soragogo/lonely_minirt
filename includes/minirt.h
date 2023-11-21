@@ -102,4 +102,7 @@ void create_obj_list(t_world *world, char **matrix);
 void create_new_obj(t_elem *new_obj, char **matrix);
 t_elem *find_last_obj(t_world *world);
 
+/*debug*/
+void ft_debug(t_world world);
+
 #endif

@@ -19,6 +19,7 @@ void create_new_obj(t_elem *new_obj, char **matrix)
 {
     int color_idx;
 
+    ft_bzero(new_obj->obj, 3);
     ft_strlcpy(new_obj->obj, matrix[0], 3);
     get_vec_from_str(&(new_obj->coor), matrix[1], 0);
     if (!ft_strncmp(matrix[0], "sp", 2))

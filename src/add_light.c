@@ -6,6 +6,7 @@ void add_light(t_world *world, char *line, int count)
     double ratio;
     if (count > 1)
         ft_error("Light defined more than once");
+    ft_strlcpy(world->light.obj, "L\0\0", 3);
     matrix = ft_split(line, ' ');
     // for (int i = 0; matrix[i]; i++)
     //     printf("matrix[%d]: %s\n", i, matrix[i]);
