@@ -36,9 +36,11 @@ void init_minilibx(t_world *world, t_data *img)
     img->img = mlx_new_image(world->mlx, 500, 500);
     img->addr = mlx_get_data_addr(img->img, &(img->bits_per_pixel), &(img->line_length),
 								&(img->endian));
-
+    printf("line_length: %d, bites per pic: %d\n", img->line_length, img->bits_per_pixel / 8);
     color = create_rgb(0, 0, 255);
-    my_mlx_pixel_put(img, 5 + world->win_w / 2, 5 + world->win_h / 2, color);
+    for (int q = 0; q < 100; q++)
+        for (int p = 0; p < 100; p++)
+        my_mlx_pixel_put(img, p + world->win_w / 2, -q + world->win_h / 2, color);
 	mlx_put_image_to_window(world->mlx, world->win, img->img, 0, 0);
     event_hook(img);
 
