@@ -124,4 +124,7 @@ void event_hook(t_data *img);
 /*debug*/
 void ft_debug(t_world world);
 
+/*get_screen_start_position*/
+t_vec get_screen_start_position(t_world world);
+
 #endif

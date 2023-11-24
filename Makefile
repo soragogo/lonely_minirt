@@ -29,6 +29,7 @@ SRCS=	 add_ambient.c \
 		debug.c \
 		init_minilibx.c \
 		event_hook.c \
+		get_screen_start_position.c \
 		vector_utils.c
 
 OBJS=$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
