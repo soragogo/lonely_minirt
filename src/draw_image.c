@@ -27,15 +27,15 @@ void get_next_position(t_vec *pos, char *param, t_vec scr_x, t_vec scr_y)
 {
     if (!ft_strncmp(param, "x", 1))
     {
-        pos->x += scr_x.x;
-        pos->y += scr_x.y;
-        pos->z += scr_x.z;
+        pos->x = pos->x + scr_x.x;
+        pos->y = pos->y + scr_x.y;
+        pos->z = pos->z + scr_x.z;
     }
     else
     {
-        pos->x -= scr_y.x;
-        pos->y -= scr_y.y;
-        pos->z -= scr_y.z;
+        pos->x = pos->x - scr_y.x;
+        pos->y = pos->y - scr_y.y;
+        pos->z = pos->z - scr_y.z;
     }
 }
 
@@ -71,9 +71,9 @@ void draw_image(t_world *world, t_data *img)
                 printf(" x: %d, y: %d\n",x, y);
             }
             if (d >= 0)
-                color = create_rgb(0, 0, 0);
+                color = create_rgb(255, 0, 0);
             else
-                color = create_rgb(0, 255, 0);
+                color = create_rgb(0, 0, 0);
             my_mlx_pixel_put(img, x + world->win_w / 2, -y + world->win_h / 2, color);
             get_next_position(&pos, "x", scr_x, scr_y);
         }
