@@ -29,6 +29,9 @@ typedef struct s_dlist
     t_vec coor;
     t_vec vec;
     unsigned char fov;
+    t_vec scr_x;
+    t_vec scr_y;
+    t_vec scr_pos;
 } t_dlist;
 
 typedef struct s_elem
@@ -125,6 +128,8 @@ void event_hook(t_data *img);
 void ft_debug(t_world world);
 
 /*get_screen_start_position*/
-t_vec get_screen_start_position(t_world world);
+void get_screen_start_position(t_world *world);
 
+/*draw_image*/
+void draw_image(t_world *world, t_data *img);
 #endif

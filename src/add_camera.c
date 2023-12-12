@@ -14,6 +14,7 @@ void add_camera(t_world *world, char *line, int count)
     world->camera.fov = ft_atoi(matrix[3]);
     if (world->camera.fov < 0 || 180 < world->camera.fov)
         ft_error("Camera FOV out of range");
+    get_screen_start_position(world);
     free_matrix(matrix);
 }
 

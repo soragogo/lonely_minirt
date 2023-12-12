@@ -4,12 +4,13 @@
 int main()
 {
     t_world world;
-    // t_data img;
+    t_data img;
 
     init_world(&world);
     // ft_debug(world);
-    get_screen_start_position(world);
-    // init_minilibx(&world, &img);
+
+    init_minilibx(&world, &img);
+    draw_image(&world, &img);
     clean_world(&world);
     system("leaks -q miniRT");
     return (0);

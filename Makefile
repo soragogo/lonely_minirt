@@ -30,7 +30,8 @@ SRCS=	 add_ambient.c \
 		init_minilibx.c \
 		event_hook.c \
 		get_screen_start_position.c \
-		vector_utils.c
+		vector_utils.c \
+		draw_image.c
 
 OBJS=$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
@@ -38,7 +39,7 @@ MINILIB_DIR = minilibx-linux/
 LDFLAGS = -L$(MINILIB_DIR)
 LDLIBS = -lm -L/usr/X11R6/lib -L minilibx-linux -lmlx -lX11 -lXext -framework OpenGL -framework AppKit
 
-ifeq ($(MAKECMDGOAL), debug)
+ifeq ($(MAKECMDGOALS), debug)
 	CC += -g -fsanitize=address
 endif
 
@@ -67,4 +68,4 @@ re: fclean all
 
 debug: fclean $(OBJS)
 	@make -C $(LIBFTDIR)
-	$(CC) $(CFLAGS) -g -fsanitize=address $(LDFLAGS) -o $(NAME) $(OBJS) $(LDLIBS) $(LIBFT_LINK) minilibx-linux/libmlx.a
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(NAME) $(OBJS) $(LDLIBS) $(LIBFT_LINK) minilibx-linux/libmlx.a

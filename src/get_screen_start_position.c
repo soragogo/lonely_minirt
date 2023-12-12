@@ -57,22 +57,24 @@ t_vec get_screen_origin(t_world world)
 
 }
 
-t_vec get_screen_start_position(t_world world)
+void get_screen_start_position(t_world *world)
 {
-    t_vec scr_x;
-    t_vec scr_y;
-    t_vec ret;
+    t_vec *scr_x;
+    t_vec *scr_y;
+    t_vec *scr_pos;
 
-    ret = get_screen_origin(world);
-    scr_x = get_screen_horizon_vec(world.camera.vec);
-    scr_y = get_screen_vertical_vec(world.camera.vec);
-    printf("scr_x.vec: %f, %f, %f\n", scr_x.x, scr_x.y, scr_x.z);
-    printf("scr_y.vec: %f, %f, %f\n", scr_y.x, scr_y.y, scr_y.z);
-    ret.x += (scr_y.x * 250 - scr_x.x * 250);
-    ret.y += (scr_y.y * 250 - scr_x.y * 250);
-    ret.z += (scr_y.z * 250 - scr_x.z * 250);
+    scr_x = &(world->camera.scr_x);
+    scr_y = &(world->camera.scr_y);
+    scr_pos = &(world->camera.scr_pos);
+    *scr_pos = get_screen_origin(*world);
+    *scr_x = get_screen_horizon_vec(world->camera.vec);
+    *scr_y = get_screen_vertical_vec(world->camera.vec);
+    printf("scr_x->vec: %f, %f, %f\n", scr_x->x, scr_x->y, scr_x->z);
+    printf("scr_y->vec: %f, %f, %f\n", scr_y->x, scr_y->y, scr_y->z);
+    scr_pos->x += (scr_y->x * 250 - scr_x->x * 250);
+    scr_pos->y += (scr_y->y * 250 - scr_x->y * 250);
+    scr_pos->z += (scr_y->z * 250 - scr_x->z * 250);
 
     puts("[get_screen_start_position]");
-    printf("ret.vec: %f, %f, %f\n", ret.x, ret.y, ret.z);
-    return (ret);
+    printf("scr_pos->vec: %f, %f, %f\n", scr_pos->x, scr_pos->y, scr_pos->z);
 }

@@ -1,0 +1,27 @@
+ベクトルが０だった時エラー（サブジェクトにはノーマライズって書いてあるから、大きさ１じゃなかったらエラーでもいい。でも、そうするとテストがしにくくなる）
+
+改行だけの行があるとそれがリーク
+
+もらうファイル名は.rtで終わる
+
+AとLはどっちかがあればよかったきする(両方０だったらエラーとかにしたほうがいいかも)
+Light management: spot brightness, hard shadows, ambiance lighting (objects are
+never completely in the dark). You must implement Ambient and diffuse lighting.
+
+C -50,0,20 0,0,0 180.1
+これも弾いたほうがいいかも
+
+cy 0.0,0.0,20.6 0,0,1.0 -14.2 -21.42 10,0,255
+高さマイナスは許容できるかもだけど、直径マイナスは意味わかんない
+
+Aに要素が足りない時にsplitした後確認せずにmatrix[2]にアクセスしてセグフォ
+A 0.2
+
+Makefile "$(MAKECMDGOALS)"です
+
+L -40,0,30 0.7.6 0,0,2
+うーん
+
+
+
+
