@@ -132,4 +132,13 @@ void get_screen_start_position(t_world *world);
 
 /*draw_image*/
 void draw_image(t_world *world, t_data *img);
+int create_rgb(int r, int g, int b);
+int create_rgb_from_fcolor(t_fcolor color);
+
+/*render_objects*/
+int render_objects(t_world *world, t_vec pos);
+
+/*debug*/
+void print_objects(t_elem *list);
+
 #endif
