@@ -136,7 +136,7 @@ int create_rgb(int r, int g, int b);
 int create_rgb_from_fcolor(t_fcolor color);
 
 /*render_objects*/
-int render_objects(t_world *world, t_vec pos);
+int render_objects(t_world *world);
 
 /*debug*/
 void print_objects(t_elem *list);

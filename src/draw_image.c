@@ -55,23 +55,23 @@ void draw_image(t_world *world, t_data *img)
 {
     t_vec scr_x;
     t_vec scr_y;
-    t_vec pos;
+    t_vec* pos;
 
     scr_x = world->camera.scr_x;
     scr_y = world->camera.scr_y;
-    pos = world->camera.scr_pos;
+    pos = &(world->camera.scr_pos);
     int color;
     print_objects(world->objs);
     for (int y = -250; y < 250; y++)
     {
         for (int x = -250; x < 250; x++)
         {
-            color = render_objects(world, pos);
+            color = render_objects(world);
             my_mlx_pixel_put(img, x + world->win_w / 2, -y + world->win_h / 2, color);
-            get_next_position(&pos, "x", scr_x, scr_y);
+            get_next_position(pos, "x", scr_x, scr_y);
         }
             // puts("\n一行完了　\n");
-            get_next_position(&pos, "y", scr_x, scr_y);
+            get_next_position(pos, "y", scr_x, scr_y);
     }
 	mlx_put_image_to_window(world->mlx, world->win, img->img, 0, 0);
 
