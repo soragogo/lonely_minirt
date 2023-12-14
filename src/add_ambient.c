@@ -8,6 +8,8 @@ void add_ambient(t_world *world, char *line, int count)
     if (count > 1)
         ft_error("Ambient defined more than once");
     matrix = ft_split(line, ' ');
+    if (!matrix[1] || !matrix[2])
+        ft_error("Ambient does not have enough number of elements");
     get_color_from_str(&(world->ambient), matrix[2]);
     ratio = atod(matrix[1]);
     if (ratio < 0 || 1 < ratio)

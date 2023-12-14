@@ -25,11 +25,17 @@ void create_new_obj(t_elem *new_obj, char **matrix)
     if (!ft_strncmp(matrix[0], "sp", 2))
     {
         color_idx = 3;
+        if (!matrix[2])
+            ft_error("Sphere does not have enough number of elements");
         new_obj->radius = atod(matrix[2]) / 2;
+        if (new_obj->radius <= 0)
+            ft_error("The radius of the cylinder should be positive");
     }
     else if (!ft_strncmp(matrix[0], "pl", 2))
     {
         color_idx = 3;
+        if (!matrix[2])
+            ft_error("Plane does not have enough number of elements");
         get_vec_from_str(&(new_obj->vec), matrix[2], 1);
         if (vec_mag(new_obj->vec) != 1)
             ft_error("The size of the plane vector should be 1");
@@ -37,11 +43,17 @@ void create_new_obj(t_elem *new_obj, char **matrix)
     else
     {
         color_idx = 5;
+        if (!matrix[2] || !matrix[3] || !matrix[4])
+            ft_error("Cylinder does not have enough number of elements");
         get_vec_from_str(&(new_obj->vec), matrix[2], 0);
         if (vec_mag(new_obj->vec) != 1)
             ft_error("The size of the cylinder vector should be 1");
         new_obj->radius = atod(matrix[3]) / 2;
+        if (new_obj->radius <= 0)
+            ft_error("The radius of the cylinder should be positive");
         new_obj->hgt = atod(matrix[4]);
+        if (new_obj->hgt <= 0)
+            ft_error("The height of the cylinder should be positive");
     }
     get_color_from_str(&(new_obj->color), matrix[color_idx]);
 }

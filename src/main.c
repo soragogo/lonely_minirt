@@ -4,7 +4,7 @@
 int main(int ac, char **av)
 {
     if (ac != 2 || !*av[1])
-        ft_error("Argument error");
+        ft_error("Argument error\nExpected: \"./miniRT [filename]\"");
     t_world world;
     t_data img;
 

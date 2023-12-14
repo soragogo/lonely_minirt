@@ -6,6 +6,8 @@ void add_camera(t_world *world, char *line, int count)
     if (count > 1)
         ft_error("Camera defined more than once");
     matrix = ft_split(line, ' ');
+    if (!matrix[1] || !matrix[2] || !matrix[3])
+        ft_error("Camera does not have enough number of elements");
     // for (int i = 0; matrix[i]; i++)
     //     printf("matrix[%d]: %s\n", i, matrix[i]);
     // printf("Camera: %c\n", *line);

@@ -8,6 +8,8 @@ void add_light(t_world *world, char *line, int count)
         ft_error("Light defined more than once");
     ft_strlcpy(world->light.obj, "L\0\0", 3);
     matrix = ft_split(line, ' ');
+        if (!matrix[1] || !matrix[2] || !matrix[3])
+        ft_error("Light does not have enough number of elements");
     // for (int i = 0; matrix[i]; i++)
     //     printf("matrix[%d]: %s\n", i, matrix[i]);
     get_vec_from_str(&(world->light.coor), matrix[1], 0);

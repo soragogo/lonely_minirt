@@ -50,8 +50,13 @@ double render_plane(t_world *world, t_elem obj, int *color, double closest)
     return (closest);
 }
 
-// double render_cylinder(t_world *world, t_elem obj, int *color, double closest)
-// {
+double q_func(double s_2, double s_1, double s_0, double x)
+{
+    return (s_2 * x * x + s_1 * x + s_0);
+}
+
+double render_cylinder(t_world *world, t_elem obj, int *color, double closest)
+{
 //     円筒の底面の中心をPとする。
 //     上面の中心をQとする。レイと、円筒が交差する条件は以下の二つを満たした時。
 //     ① 線分PQとの距離が円筒の半径以下である。
@@ -68,13 +73,35 @@ double render_plane(t_world *world, t_elem obj, int *color, double closest)
 //     b = 2((-B_dot_D)s + D_dot_C - A_dot_D)
 //     c = (B_dot_B)s^2 + C_dot_C + A_dot_A +2(A_dot_B - B_dot_C)s + +2(-A_dot_C) - r^2
 //     紙とペン欲しい…。
-//     0 <= s <= obj.radius の時
+//     0 <= s <= obj.hgt の時
 //     判別式が正となるような解sがあれば良い。
 //     （s = 0と s = obj.radiusのところだけ調べれば良くね）場合分けして
 //     tが正の解を持つか。
-// }
+        t_vec a = obj.coor;
+        t_vec b = obj.vec;
+        t_vec c = world->camera.coor;
+        t_vec d = vec_normalize(vec_sub(world->camera.scr_pos, world->camera.coor));
+        int crossed;
 
-
+        crossed = -1;
+        //sの係数を出すと、
+        double s_2 = vec_dot(b, d) * vec_dot(b, d) - 1;// - vec_dot(d, d) * vec_dot(b, b);
+        double s_1 = 2 * vec_dot(b , d) * (vec_dot(a,d) - vec_dot(c, d))
+                    + 2 * vec_dot(d , d) * (vec_dot(b,c) - vec_dot(a,b));
+        double s_0 = (vec_dot(c, d) - vec_dot(a, d)) * (vec_dot(c, d) - vec_dot(a, d))
+                    + vec_dot(d, d) * (vec_dot(a,c) - vec_dot(c, c) - vec_dot(a,a) + obj.radius * obj.radius);
+        if (s_1 < 0 || obj.hgt < (s_1 / 2) || s_2 == 0)
+        {
+            if (q_func(s_2, s_1, s_0, 0) >= 0 ||  q_func(s_2, s_1, s_0, vec.hgt) >= 0)
+                atari;
+        }
+        else
+        {
+            if (q_func(s_2, s_1, s_0, s_1 / 2) * q_func(s_2, s_1, s_0, 0) <= 0
+                || q_func(s_2, s_1, s_0, s_1 / 2) * q_func(s_2, s_1, s_0, hgt) <= 0)
+                atari
+        }
+}
 int render_objects(t_world *world)
 {
     t_elem *obj;
