@@ -32,7 +32,8 @@ SRCS=	 add_ambient.c \
 		get_screen_start_position.c \
 		vector_utils.c \
 		draw_image.c \
-		render_objects.c
+		render_objects.c \
+		render_cylinder.c
 
 OBJS=$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 

@@ -75,6 +75,14 @@ double         vec_mag(t_vec a)
     return (mag);
 }
 
+double          vec_sum(t_vec a)
+{
+    double sum;
+    sum = a.x + a.y + a.z;
+
+    return sum;
+}
+
 t_vec          vec_normalize(t_vec a)
 {
     double mag;
