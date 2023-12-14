@@ -31,11 +31,15 @@ void create_new_obj(t_elem *new_obj, char **matrix)
     {
         color_idx = 3;
         get_vec_from_str(&(new_obj->vec), matrix[2], 1);
+        if (vec_mag(new_obj->vec) != 1)
+            ft_error("The size of the plane vector should be 1");
     }
     else
     {
         color_idx = 5;
         get_vec_from_str(&(new_obj->vec), matrix[2], 0);
+        if (vec_mag(new_obj->vec) != 1)
+            ft_error("The size of the cylinder vector should be 1");
         new_obj->radius = atod(matrix[3]) / 2;
         new_obj->hgt = atod(matrix[4]);
     }

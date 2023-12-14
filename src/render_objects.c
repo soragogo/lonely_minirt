@@ -50,19 +50,29 @@ double render_plane(t_world *world, t_elem obj, int *color, double closest)
     return (closest);
 }
 
-double render_cylinder(t_world *world, t_elem obj, int *color, double closest)
-{
-    円筒の底面の中心をPとする。
-    上面の中心をQとする。レイと、円筒が交差する条件は以下の二つを満たした時。
-    ①　線分PQとの距離が円筒の半径以下である。
-    ② ①の交点から直線PQに垂線を下ろした時に、その交点が線分PQの中にあること。
-    これをコードに落とせばおけ！
+// double render_cylinder(t_world *world, t_elem obj, int *color, double closest)
+// {
+//     円筒の底面の中心をPとする。
+//     上面の中心をQとする。レイと、円筒が交差する条件は以下の二つを満たした時。
+//     ① 線分PQとの距離が円筒の半径以下である。
+//     ② ①の交点から直線PQに垂線を下ろした時に、その交点が線分PQの中にあること。
+//     これをコードに落とせばおけ！
 
-    coreについて O + sD
-    0 <= s <= obj.radius の時
-    （s = 0と　s = obj.radiusのところだけ調べれば良くね）場合分けして
-    tが正の解を持つか。
-}
+//     coreの座標について A + sB
+//     rayについて C + tD
+//     (x - (A + sB))^2 + (y - (A + sB))^2 + (z - (A + sB))^2  = r^2
+//     (C + tD - (A + sB))^2 + (C + tD - (A + sB))^2 + (C + tD - (A + sB))^2  = r^2
+//     tについて解いて a*t^2 + b*t + c = 0 の形に直すと、
+//     係数は、
+//     a = D_to_D
+//     b = 2((-B_dot_D)s + D_dot_C - A_dot_D)
+//     c = (B_dot_B)s^2 + C_dot_C + A_dot_A +2(A_dot_B - B_dot_C)s + +2(-A_dot_C) - r^2
+//     紙とペン欲しい…。
+//     0 <= s <= obj.radius の時
+//     判別式が正となるような解sがあれば良い。
+//     （s = 0と s = obj.radiusのところだけ調べれば良くね）場合分けして
+//     tが正の解を持つか。
+// }
 
 
 int render_objects(t_world *world)
@@ -85,10 +95,10 @@ int render_objects(t_world *world)
         {
             closest = render_plane(world, *obj, &color, closest);
         }
-        else if (!ft_strncmp(obj->obj, "cy", 2))
-        {
-            closest = render_cylinder(world, *obj, &color, closest);
-        }
+        // else if (!ft_strncmp(obj->obj, "cy", 2))
+        // {
+        //     closest = render_cylinder(world, *obj, &color, closest);
+        // }
         obj = obj->next;
         index++;
     }

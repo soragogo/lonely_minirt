@@ -96,7 +96,7 @@ void free_matrix(char **matrix);
 double atod(char *str);
 
 /*init_world*/
-void init_world(t_world *world);
+void init_world(t_world *world, char *filename);
 
 /*read_map*/
 int open_scene(const char *file);
