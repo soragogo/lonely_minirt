@@ -4,9 +4,9 @@ double t_2_coefficient(t_world *world, t_elem obj)
 {
     t_vec b = obj.vec;
     t_vec d = vec_normalize(vec_sub(world->camera.scr_pos, world->camera.coor));
-    double q = vec_sum(d);
+    double p = vec_sum(d);
 
-    return (q * q + 1 - 2 * q * vec_dot(b,d));
+    return (p * p + 1 - 2 * p * vec_dot(b,d));
 }
 
 double t_1_coefficient(t_world *world, t_elem obj)
@@ -17,7 +17,7 @@ double t_1_coefficient(t_world *world, t_elem obj)
     t_vec d = vec_normalize(vec_sub(world->camera.scr_pos, world->camera.coor));
     double q = -vec_sum(b) + vec_sum(c) - vec_dot(a, b);
 
-    return (2 * ((vec_dot(a, b) - vec_dot(b, c) + 1) * vec_sum(d)
+    return (2 * ((vec_dot(a, b) - vec_dot(b, c) + q) * vec_sum(d)
                 -q * vec_dot(b, d) + vec_dot(c, d) - vec_dot(a, d)));
 }
 
@@ -29,7 +29,7 @@ double t_0_coefficient(t_world *world, t_elem obj)
     double q = -vec_sum(b) + vec_sum(c) - vec_dot(a, b);
 
     return (q * q + vec_dot(c, c) + vec_dot(a, a)
-            + 2 * (q * (vec_dot(a, b) - vec_dot(b, c)) - vec_dot(c, a)));
+            + 2 * (q * (vec_dot(a, b) - vec_dot(b, c)) - vec_dot(c, a)) - obj.radius * obj.radius);
 }
 
 bool cylinder_hight_ok(t_world *world, t_elem obj, double t)

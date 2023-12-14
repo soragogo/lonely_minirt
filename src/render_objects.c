@@ -35,16 +35,41 @@ double render_cylinder(t_world *world, t_elem obj, int *color, double closest)
     double b = t_1_coefficient(world, obj);
     double c = t_0_coefficient(world, obj);
     double d = b * b - 4 * a * c;
-
-    double t = (-b - sqrt(d)) / (2 * a);
-    if (t < 0)
-        t = (-b + sqrt(d)) / (2 * a);
-    if (d >= 0 && cylinder_hight_ok(world, obj, t))
+    double t;
+    if (a == 0)
     {
-        if (t >= 0 && (t <= closest || closest == -1))
+        return closest;
+
+    }
+    else
+    {
+        if (d >= 0)
         {
-            *color = create_rgb_from_fcolor(obj.color);
-            return t;
+            t = (-b - sqrt(d)) / (2 * a);
+            if (t < 0)
+                t = (-b + sqrt(d)) / (2 * a);
+            printf("a: %f, b: %f, b: %f, d: %f, t: %f\n", a,b,c,d, t);
+        }
+        if (d >= 0 && cylinder_hight_ok(world, obj, t))
+        {
+            if (t >= 0 && (t <= closest || closest == -1))
+            {
+                *color = create_rgb_from_fcolor(obj.color);
+                return t;
+            }
+        }
+        else
+        {
+            t = (-b + sqrt(d)) / (2 * a);
+            if (d >= 0 && cylinder_hight_ok(world, obj, t))
+            {
+                if (t >= 0 && (t <= closest || closest == -1))
+                {
+                    obj.color.r += 100;
+                    *color = create_rgb_from_fcolor(obj.color);
+                    return t;
+                }
+            }
         }
     }
     return closest;
