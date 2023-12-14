@@ -13,15 +13,13 @@ double render_sphere(t_world *world, t_elem obj, int *color, double closest)
     dir_vec = vec_normalize(vec_sub(pos, world->camera.coor));
     double a = vec_dot(dir_vec, dir_vec);
     double b = 2 * vec_dot(sphere2camera, dir_vec);
-    double c = vec_dot(sphere2camera, sphere2camera) - (obj.diam * obj.diam);
+    double c = vec_dot(sphere2camera, sphere2camera) - (obj.radius * obj.radius);
     double d = b * b - 4 * a * c;
     if (d >= 0)
     {
         t = (-b - sqrt(d)) / (2 * a);
         if (t < 0)
             t = (-b + sqrt(d)) / (2 * a);
-        // if (closest != -1)
-            // printf("t: %f, closest: %f\n", t, closest);
         if ((t >= 0 && t <= closest) || closest == -1)
         {
             *color = create_rgb_from_fcolor(obj.color);
@@ -36,12 +34,12 @@ double render_plane(t_world *world, t_elem obj, int *color, double closest)
     double a = vec_dot(obj.vec, obj.coor) - vec_dot(obj.vec, world->camera.coor);
     double b = vec_dot(obj.vec, world->camera.vec);
 
-    if (!a)
+    if (a == 0)
     {
         *color = create_rgb_from_fcolor(obj.color);
         return 0;
     }
-    else if (b && (a / b > 0))
+    else if (b != 0 && (a / b > 0))
     {
         if (a / b <= closest || closest == -1)
         {
@@ -50,6 +48,20 @@ double render_plane(t_world *world, t_elem obj, int *color, double closest)
         }
     }
     return (closest);
+}
+
+double render_cylinder(t_world *world, t_elem obj, int *color, double closest)
+{
+    円筒の底面の中心をPとする。
+    上面の中心をQとする。レイと、円筒が交差する条件は以下の二つを満たした時。
+    ①　線分PQとの距離が円筒の半径以下である。
+    ② ①の交点から直線PQに垂線を下ろした時に、その交点が線分PQの中にあること。
+    これをコードに落とせばおけ！
+
+    coreについて O + sD
+    0 <= s <= obj.radius の時
+    （s = 0と　s = obj.radiusのところだけ調べれば良くね）場合分けして
+    tが正の解を持つか。
 }
 
 
@@ -67,14 +79,15 @@ int render_objects(t_world *world)
     {
         if (!ft_strncmp(obj->obj, "sp", 2))
         {
-            // printf("obj[%d]: %s %p\n",index, obj->obj, obj->obj);
-            // printf("obj_vec x: %f,y: %f, z: %f\n", obj->coor.x, obj->coor.y, obj->coor.z);
             closest = render_sphere(world, *obj, &color, closest);
         }
         else if (!ft_strncmp(obj->obj, "pl", 2))
         {
             closest = render_plane(world, *obj, &color, closest);
-
+        }
+        else if (!ft_strncmp(obj->obj, "cy", 2))
+        {
+            closest = render_cylinder(world, *obj, &color, closest);
         }
         obj = obj->next;
         index++;

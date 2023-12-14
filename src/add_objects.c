@@ -25,7 +25,7 @@ void create_new_obj(t_elem *new_obj, char **matrix)
     if (!ft_strncmp(matrix[0], "sp", 2))
     {
         color_idx = 3;
-        new_obj->diam = atod(matrix[2]);
+        new_obj->radius = atod(matrix[2]) / 2;
     }
     else if (!ft_strncmp(matrix[0], "pl", 2))
     {
@@ -36,7 +36,7 @@ void create_new_obj(t_elem *new_obj, char **matrix)
     {
         color_idx = 5;
         get_vec_from_str(&(new_obj->vec), matrix[2], 0);
-        new_obj->diam = atod(matrix[3]);
+        new_obj->radius = atod(matrix[3]) / 2;
         new_obj->hgt = atod(matrix[4]);
     }
     get_color_from_str(&(new_obj->color), matrix[color_idx]);

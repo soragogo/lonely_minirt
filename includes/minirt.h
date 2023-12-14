@@ -40,7 +40,7 @@ typedef struct s_elem
     t_vec coor;
     t_vec vec;
     t_fcolor color;
-    double diam;
+    double radius;
     double hgt;
     struct s_elem *next;
 } t_elem;

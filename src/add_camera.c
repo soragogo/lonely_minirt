@@ -11,6 +11,8 @@ void add_camera(t_world *world, char *line, int count)
     // printf("Camera: %c\n", *line);
     get_vec_from_str(&(world->camera.coor),matrix[1], 0);
     get_vec_from_str(&(world->camera.vec),matrix[2], 1);
+    if (vec_mag(world->camera.vec) != 1)
+        ft_error("The size of the camera vector should be 1");
     world->camera.fov = ft_atoi(matrix[3]);
     if (world->camera.fov < 0 || 180 < world->camera.fov)
         ft_error("Camera FOV out of range");

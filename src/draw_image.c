@@ -61,7 +61,7 @@ void draw_image(t_world *world, t_data *img)
     scr_y = world->camera.scr_y;
     pos = &(world->camera.scr_pos);
     int color;
-    print_objects(world->objs);
+    ft_debug(*world);
     for (int y = -250; y < 250; y++)
     {
         for (int x = -250; x < 250; x++)
