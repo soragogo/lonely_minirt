@@ -77,9 +77,9 @@ double render_cylinder(t_world *world, t_elem obj, int *color, double closest)
 
 double render_plane(t_world *world, t_elem obj, int *color, double closest)
 {
+    t_vec dir_vec = vec_normalize(vec_sub(world->camera.scr_pos, world->camera.coor));
     double a = vec_dot(obj.vec, obj.coor) - vec_dot(obj.vec, world->camera.coor);
-    double b = vec_dot(obj.vec, world->camera.vec);
-
+    double b = vec_dot(obj.vec, dir_vec);
     if (a == 0)
     {
         *color = create_rgb_from_fcolor(obj.color);
