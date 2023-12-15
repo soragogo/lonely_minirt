@@ -48,7 +48,6 @@ double render_cylinder(t_world *world, t_elem obj, int *color, double closest)
             t = (-b - sqrt(d)) / (2 * a);
             if (t < 0)
                 t = (-b + sqrt(d)) / (2 * a);
-            printf("a: %f, b: %f, b: %f, d: %f, t: %f\n", a,b,c,d, t);
         }
         if (d >= 0 && cylinder_hight_ok(world, obj, t))
         {
@@ -65,7 +64,6 @@ double render_cylinder(t_world *world, t_elem obj, int *color, double closest)
             {
                 if (t >= 0 && (t <= closest || closest == -1))
                 {
-                    obj.color.r += 100;
                     *color = create_rgb_from_fcolor(obj.color);
                     return t;
                 }
