@@ -1,9 +1,9 @@
 #include "../includes/minirt.h"
 
-void print_ambient(t_fcolor ambient)
+void print_ambient(double *ambient)
 {
     puts("[AMBIENT]");
-    printf("    Color: (%d, %d, %d)\n", ambient.r, ambient.g, ambient.b);
+    printf("    Color: (%f, %f, %f)\n", ambient[0], ambient[1], ambient[2]);
 }
 
 void print_camera(t_dlist camera)

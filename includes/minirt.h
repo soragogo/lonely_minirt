@@ -52,7 +52,7 @@ typedef struct s_world {
     int        win_h;
     t_dlist camera;  // カメラ
     t_elem      *objs;  // 物体のリスト
-    t_fcolor    ambient;  // 環境光の強度
+    double    ambient[3];  // 環境光の強度
     t_elem      light;  // 光源
 }               t_world;
 
@@ -133,8 +133,6 @@ void get_screen_start_position(t_world *world);
 
 /*draw_image*/
 void draw_image(t_world *world, t_data *img);
-int create_rgb(int r, int g, int b);
-int create_rgb_from_fcolor(t_fcolor color);
 
 /*render_objects*/
 int render_objects(t_world *world);
@@ -147,4 +145,11 @@ double t_0_coefficient(t_world *world, t_elem obj);
 /*debug*/
 void print_objects(t_elem *list);
 
+/*color_utils*/
+int create_rgb(int r, int g, int b);
+int create_rgb_from_fcolor(t_fcolor color);
+t_fcolor color_init(unsigned char r, unsigned char g, unsigned char b);
+
+/*render_ambient*/
+void render_ambient(double *ambient, t_fcolor *color);
 #endif

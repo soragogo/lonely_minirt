@@ -1,6 +1,6 @@
 #include "../includes/minirt.h"
 
-double render_sphere(t_world *world, t_elem obj, int *color, double closest)
+double render_sphere(t_world *world, t_elem obj, t_fcolor *color, double closest)
 {
     t_vec sphere2camera;
     t_vec dir_vec;
@@ -22,14 +22,14 @@ double render_sphere(t_world *world, t_elem obj, int *color, double closest)
             t = (-b + sqrt(d)) / (2 * a);
         if (t >= 0 && (t <= closest || closest == -1))
         {
-            *color = create_rgb_from_fcolor(obj.color);
+            *color = obj.color;
             return t;
         }
     }
     return closest;
 }
 
-double render_cylinder(t_world *world, t_elem obj, int *color, double closest)
+double render_cylinder(t_world *world, t_elem obj, t_fcolor *color, double closest)
 {
     double a = t_2_coefficient(world, obj);
     double b = t_1_coefficient(world, obj);
@@ -53,7 +53,7 @@ double render_cylinder(t_world *world, t_elem obj, int *color, double closest)
         {
             if (t >= 0 && (t <= closest || closest == -1))
             {
-                *color = create_rgb_from_fcolor(obj.color);
+                *color = obj.color;
                 return t;
             }
         }
@@ -64,7 +64,7 @@ double render_cylinder(t_world *world, t_elem obj, int *color, double closest)
             {
                 if (t >= 0 && (t <= closest || closest == -1))
                 {
-                    *color = create_rgb_from_fcolor(obj.color);
+                    *color = obj.color;
                     return t;
                 }
             }
@@ -73,35 +73,38 @@ double render_cylinder(t_world *world, t_elem obj, int *color, double closest)
     return closest;
 }
 
-double render_plane(t_world *world, t_elem obj, int *color, double closest)
+double render_plane(t_world *world, t_elem obj, t_fcolor *color, double closest)
 {
     t_vec dir_vec = vec_normalize(vec_sub(world->camera.scr_pos, world->camera.coor));
     double a = vec_dot(obj.vec, obj.coor) - vec_dot(obj.vec, world->camera.coor);
     double b = vec_dot(obj.vec, dir_vec);
     if (a == 0)
     {
-        *color = create_rgb_from_fcolor(obj.color);
+        *color = obj.color;
         return 0;
     }
     else if (b != 0 && (a / b > 0))
     {
         if (a / b <= closest || closest == -1)
         {
-            *color = create_rgb_from_fcolor(obj.color);
+            *color = obj.color;
             return (a / b);
         }
     }
     return (closest);
 }
 
+
+
+
 int render_objects(t_world *world)
 {
     t_elem *obj;
-    int color;
+    t_fcolor color;
     int index = 1;
     double closest;
 
-    color = 0;
+    color = color_init(0, 0, 0);
     closest = -1;
     obj = world->objs;
     while (obj)
@@ -123,5 +126,6 @@ int render_objects(t_world *world)
     }
     // if (closest != -1)
     //     printf("color: %d\n", color);
-    return color;
+    render_ambient(world->ambient, &color);
+    return create_rgb_from_fcolor(color);
 }

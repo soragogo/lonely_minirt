@@ -8,19 +8,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-int create_rgb(int r, int g, int b)
-{
-    return (r << 16 | g << 8 | b);
-}
-
-int create_rgb_from_fcolor(t_fcolor color)
-{
-    int r = color.r;
-    int g = color.g;
-    int b = color.b;
-    return (r << 16 | g << 8 | b);
-}
-
 
 int	draw_frame(void *param)
 {
