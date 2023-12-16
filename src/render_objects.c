@@ -73,25 +73,52 @@ double render_cylinder(t_world *world, t_elem obj, t_fcolor *color, double close
     return closest;
 }
 
-double render_plane(t_world *world, t_elem obj, t_fcolor *color, double closest)
+double find_pl_hit(t_elem obj, t_vec coor, t_vec dir_vec)
 {
-    t_vec dir_vec = vec_normalize(vec_sub(world->camera.scr_pos, world->camera.coor));
-    double a = vec_dot(obj.vec, obj.coor) - vec_dot(obj.vec, world->camera.coor);
+
+    double a = vec_dot(obj.vec, obj.coor) - vec_dot(obj.vec, coor);
     double b = vec_dot(obj.vec, dir_vec);
     if (a == 0)
     {
-        *color = obj.color;
         return 0;
     }
     else if (b != 0 && (a / b > 0))
     {
-        if (a / b <= closest || closest == -1)
-        {
-            *color = obj.color;
-            return (a / b);
-        }
+        return (a / b);
     }
-    return (closest);
+    return -1;
+}
+
+
+double render_plane(t_world *world, t_elem obj, t_fcolor *color, double closest)
+{
+    double hit_distance;
+    t_vec dir_vec = vec_normalize(vec_sub(world->camera.scr_pos, world->camera.coor));
+    hit_distance = find_pl_hit(obj, world->camera.coor, dir_vec);
+
+    if (hit_distance >= 0 && (hit_distance <= closest || closest == -1))
+    {
+        *color = obj.color;
+        return (hit_distance);
+    }
+    else
+        return closest;
+    // double a = vec_dot(obj.vec, obj.coor) - vec_dot(obj.vec, world->camera.coor);
+    // double b = vec_dot(obj.vec, dir_vec);
+    // if (a == 0)
+    // {
+    //     *color = obj.color;
+    //     return 0;
+    // }
+    // else if (b != 0 && (a / b > 0))
+    // {
+    //     if (a / b <= closest || closest == -1)
+    //     {
+    //         *color = obj.color;
+    //         return (a / b);
+    //     }
+    // }
+    // return (closest);
 }
 
 
@@ -101,7 +128,6 @@ int render_objects(t_world *world)
 {
     t_elem *obj;
     t_fcolor color;
-    int index = 1;
     double closest;
 
     color = color_init(0, 0, 0);
@@ -110,19 +136,12 @@ int render_objects(t_world *world)
     while (obj)
     {
         if (!ft_strncmp(obj->obj, "sp", 2))
-        {
             closest = render_sphere(world, *obj, &color, closest);
-        }
         else if (!ft_strncmp(obj->obj, "pl", 2))
-        {
             closest = render_plane(world, *obj, &color, closest);
-        }
         else if (!ft_strncmp(obj->obj, "cy", 2))
-        {
             closest = render_cylinder(world, *obj, &color, closest);
-        }
         obj = obj->next;
-        index++;
     }
     // if (closest != -1)
     //     printf("color: %d\n", color);
