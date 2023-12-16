@@ -138,10 +138,10 @@ void draw_image(t_world *world, t_data *img);
 int render_objects(t_world *world);
 
 /*render_cylinder*/
-bool cylinder_hight_ok(t_world *world, t_elem obj, double t);
-double t_2_coefficient(t_world *world, t_elem obj);
-double t_1_coefficient(t_world *world, t_elem obj);
-double t_0_coefficient(t_world *world, t_elem obj);
+bool cylinder_hight_ok(t_elem obj, t_vec c, t_vec d, double t);
+double t_2_coefficient(t_elem obj, t_vec d);
+double t_1_coefficient(t_elem obj, t_vec c, t_vec d);
+double t_0_coefficient(t_elem obj, t_vec c);
 /*debug*/
 void print_objects(t_elem *list);
 

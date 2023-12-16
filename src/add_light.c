@@ -4,7 +4,7 @@ void add_light(t_world *world, char *line, int count)
 {
     char **matrix;
     double ratio;
-    printf("[8] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
+    // printf("[8] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
     if (count > 1)
         ft_error("Light defined more than once");
     ft_strlcpy(world->light.obj, "L\0\0", 3);
@@ -22,5 +22,5 @@ void add_light(t_world *world, char *line, int count)
     world->light.color.g *= ratio;
     world->light.color.b *= ratio;
     free_matrix(matrix);
-    printf("[9] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
+    // printf("[9] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
 }

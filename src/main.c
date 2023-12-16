@@ -26,9 +26,9 @@ int main(int ac, char **av)
     init_world(&world, av[1]);
     // ft_debug(world);
 
-    printf("[1] %f, %f, %f\n", world.ambient[0], world.ambient[1], world.ambient[2]);
+    // printf("[1] %f, %f, %f\n", world.ambient[0], world.ambient[1], world.ambient[2]);
     init_minilibx(&world, &img);
-    printf("[2] %f, %f, %f\n", world.ambient[0], world.ambient[1], world.ambient[2]);
+    // printf("[2] %f, %f, %f\n", world.ambient[0], world.ambient[1], world.ambient[2]);
     draw_image(&world, &img);
     clean_world(&world);
     system("leaks -q miniRT");

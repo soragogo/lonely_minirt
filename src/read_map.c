@@ -7,19 +7,19 @@ void add_element(t_world *world, char *line, int *a_c_l)
     {
         a_c_l[0] += 1;
         add_ambient(world, line, a_c_l[0]);
-        printf("[4] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
+        // printf("[4] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
     }
     else if (!ft_strncmp(line, "C ", 2))
     {
         a_c_l[1] += 1;
         add_camera(world, line, a_c_l[1]);
-        printf("[5] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
+        // printf("[5] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
     }
     else if (!ft_strncmp(line, "L ", 2))
     {
         a_c_l[2] += 1;
         add_light(world, line, a_c_l[2]);
-        printf("[6] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
+        // printf("[6] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
     }
     else if (!ft_strncmp(line, "pl ", 3)
         || !ft_strncmp(line, "sp ", 3)
@@ -27,7 +27,7 @@ void add_element(t_world *world, char *line, int *a_c_l)
         add_object(world, line);
     else
         ft_error("Improper name of element");
-    printf("[7] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
+    // printf("[7] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
 }
 
 void add_elements(t_world *world, int fd)
@@ -49,7 +49,7 @@ void add_elements(t_world *world, int fd)
     }
     if (!(a_c_l[0] * a_c_l[1] * a_c_l[2]))
         ft_error("Essencial element missing in the scene file");
-    printf("[3] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
+    // printf("[3] %f, %f, %f\n", world->ambient[0], world->ambient[1], world->ambient[2]);
 }
 
 int open_scene(const char *file)
