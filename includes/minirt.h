@@ -45,6 +45,12 @@ typedef struct s_elem
     struct s_elem *next;
 } t_elem;
 
+typedef struct t_light
+{
+    t_vec coor;
+    double rgb[3];
+} t_light;
+
 typedef struct s_world {
     void       *mlx;  // minilibx特有のやつ
     void       *win;  // minilibxのウィンドウを指すポインタ
@@ -53,7 +59,7 @@ typedef struct s_world {
     t_dlist camera;  // カメラ
     t_elem      *objs;  // 物体のリスト
     double    ambient[3];  // 環境光の強度
-    t_elem      light;  // 光源
+    t_light      light;  // 光源
 }               t_world;
 
 typedef struct	s_data {
@@ -65,7 +71,6 @@ typedef struct	s_data {
 	int		line_length;
 	int		endian;
 }				t_data;
-
 
 /*vector*/
 t_vec          vec_init(double x, double y, double z);
@@ -123,7 +128,6 @@ void init_minilibx(t_world *world, t_data *img);
 
 /*event_hook*/
 void event_hook(t_data *img);
-
 
 /*debug*/
 void ft_debug(t_world world);

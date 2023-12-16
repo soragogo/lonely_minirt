@@ -14,12 +14,11 @@ void print_camera(t_dlist camera)
     printf("    fov: %d\n", camera.fov);
 }
 
-void print_light(t_elem light)
+void print_light(t_light light)
 {
     puts("[LIGHT]");
-    printf("    obj: %s\n", light.obj);
     printf("    座標: (%f, %f, %f)\n", light.coor.x, light.coor.y, light.coor.z);
-    printf("    Color: (%d, %d, %d)\n", light.color.r, light.color.g, light.color.b);
+    printf("    Color: (%f, %f, %f)\n", light.rgb[0], light.rgb[1], light.rgb[2]);
 }
 
 void print_objects(t_elem *list)

@@ -17,9 +17,7 @@ t_vec          vec_add(t_vec a, t_vec b)
     new_vec.x = a.x + b.x;
     new_vec.y = a.y + b.y;
     new_vec.z = a.z + b.z;
-
     return (new_vec);
-
 }
 
 t_vec          vec_sub(t_vec a, t_vec b)
@@ -29,7 +27,6 @@ t_vec          vec_sub(t_vec a, t_vec b)
     new_vec.x = a.x - b.x;
     new_vec.y = a.y - b.y;
     new_vec.z = a.z - b.z;
-
     return (new_vec);
 }
 
@@ -40,7 +37,6 @@ t_vec          vec_mult(t_vec a, double b)
     new_vec.x = a.x * b;
     new_vec.y = a.y * b;
     new_vec.z = a.z * b;
-
     return (new_vec);
 }
 
@@ -51,7 +47,6 @@ double         vec_dot(t_vec a, t_vec b)
     dot = (a.x * b.x)
         + (a.y * b.y)
         + (a.z * b.z);
-
     return (dot);
 }
 
@@ -62,7 +57,6 @@ t_vec          vec_cross(t_vec a, t_vec b)
     new_vec.x = a.y * b.z - a.z - b.y;
     new_vec.y = a.z * b.x - a.x - b.z;
     new_vec.z = a.x * b.y - a.y - b.x;
-
     return (new_vec);
 }
 
@@ -79,7 +73,6 @@ double          vec_sum(t_vec a)
 {
     double sum;
     sum = a.x + a.y + a.z;
-
     return sum;
 }
 
