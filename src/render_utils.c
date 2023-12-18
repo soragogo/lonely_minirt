@@ -23,7 +23,7 @@ double find_sp_hit(t_elem obj, t_vec coor, t_vec dir_vec)
     return -1;
 }
 
-double find_cy_hit(t_elem obj, t_vec coor, t_vec dir_vec)
+double find_cy_hit(t_elem obj, t_vec coor, t_vec dir_vec, t_info *closest)
 {
     double a = t_2_coefficient(obj, dir_vec);
     double b = t_1_coefficient(obj, coor, dir_vec);
@@ -39,7 +39,11 @@ double find_cy_hit(t_elem obj, t_vec coor, t_vec dir_vec)
         {
             t = (-b + sqrt(d)) / (2 * a);
             if (t > 0.00001 && cylinder_hight_ok(obj, coor, dir_vec, t))
+            {
+                if (t >= 0 && (t <= closest->d || closest->d == -1))
+                closest->side = -1;
                 return t;
+            }
         }
     }
     return -1;

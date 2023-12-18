@@ -26,17 +26,15 @@ t_vec caliculate_surface_normal(t_world *world, t_info *closest)
 
 bool light_unreachable(t_world *world, t_info *closest)
 {
+    return false;
     if (strncmp(closest->obj.obj, "cy", 2))
-        return true;
+        return false;
     t_vec normal;
     normal = caliculate_surface_normal(world, closest);
-
     double camera_pos;
     double light_pos;
-
     camera_pos = vec_dot(normal, world->camera.coor) - vec_dot(normal, closest->xed_pt);
     light_pos = vec_dot(normal, world->light.coor) - vec_dot(normal, closest->xed_pt);
-
     if (camera_pos * light_pos <= 0)
         return (true);
     else
@@ -95,6 +93,7 @@ void render_light(t_world *world, t_info *closest, t_fcolor *color)
     if (!light_unreachable(world, closest) && !is_shed(world, closest))
     {
         closest->normal = caliculate_surface_normal(world, closest);
+        closest->normal = vec_mult(closest->normal, closest->side);
         double cos = vec_dot(closest->to_light, closest->normal);
         if (cos < 0)
             cos *= -1;

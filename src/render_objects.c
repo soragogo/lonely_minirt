@@ -22,7 +22,7 @@ void render_sphere(t_world *world, t_elem obj, t_fcolor *color, t_info *closest)
 void render_cylinder(t_world *world, t_elem obj, t_fcolor *color, t_info *closest)
 {
     t_vec dir_vec = vec_normalize(vec_sub(world->camera.scr_pos, world->camera.coor));
-    double hit_distance = find_cy_hit(obj, world->camera.coor, dir_vec);
+    double hit_distance = find_cy_hit(obj, world->camera.coor, dir_vec, closest);
     if (hit_distance >= 0 && (hit_distance <= closest->d || closest->d == -1))
     {
         *color = obj.color;
@@ -64,6 +64,7 @@ int render_objects(t_world *world)
     t_info closest;
 
     ft_bzero(&closest, sizeof(t_info));
+    closest.side = 1;
     color = color_init(0, 0, 0);
     // closest[0] = 0;
     closest.d = -1;

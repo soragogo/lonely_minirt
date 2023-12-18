@@ -79,6 +79,7 @@ typedef struct s_info
     t_vec xed_pt;
     t_vec to_light;
     t_vec normal;
+    double side;
 } t_info;
 
 
@@ -173,5 +174,5 @@ void render_ambient(double *ambient, double *rgb);
 /*render_utils*/
 double find_sp_hit(t_elem obj, t_vec coor, t_vec dir_vec);
 double find_pl_hit(t_elem obj, t_vec coor, t_vec dir_vec);
-double find_cy_hit(t_elem obj, t_vec coor, t_vec dir_vec);
+double find_cy_hit(t_elem obj, t_vec coor, t_vec dir_vec, t_info *closest);
 #endif
