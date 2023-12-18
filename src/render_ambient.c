@@ -7,7 +7,7 @@ void render_ambient(double *ambient, double *rgb)
     {
         rgb[i] += ambient[i];
         if (rgb[i] > 1)
-            rgb[i] = 0;
+            rgb[i] = 1;
         i++;
     }
 }

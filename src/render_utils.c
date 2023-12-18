@@ -53,7 +53,7 @@ double find_pl_hit(t_elem obj, t_vec coor, t_vec dir_vec)
     double b = vec_dot(obj.vec, dir_vec);
     if (a == 0)
         return 0;
-    else if (b != 0 && (a / b > 0.00001))
+    else if (b != 0 && (a / b > 0))
         return (a / b);
     return -1;
 }

@@ -11,11 +11,11 @@ bool is_shed(t_world *world, t_vec coor, t_vec dir_vec)
     while (obj)
     {
         if (!ft_strncmp(obj->obj, "sp", 2))
-            obj_hit = find_sp_hit(*obj, coor, dir_vec);
+            obj_hit = find_sp_hit(*obj, vec_add(coor, vec_mult(dir_vec, 0.00001)), dir_vec);
         else if (!ft_strncmp(obj->obj, "pl", 2))
-            obj_hit = find_pl_hit(*obj, coor, dir_vec);
+            obj_hit = find_pl_hit(*obj, vec_add(coor, vec_mult(dir_vec, 0.00001)), dir_vec);
         else if (!ft_strncmp(obj->obj, "cy", 2))
-            obj_hit = find_cy_hit(*obj, coor, dir_vec);
+            obj_hit = find_cy_hit(*obj, vec_add(coor, vec_mult(dir_vec, 0.00001)), dir_vec);
         if (obj_hit != -1 && obj_hit < vec_mag(vec_sub(world->light.coor, coor)))
         {
             return true;
