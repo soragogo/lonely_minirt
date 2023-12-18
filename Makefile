@@ -35,7 +35,9 @@ SRCS=	 add_ambient.c \
 		render_objects.c \
 		render_cylinder.c \
 		color_utils.c \
-		render_ambient.c
+		render_ambient.c \
+		render_light.c \
+		render_utils.c
 
 OBJS=$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 

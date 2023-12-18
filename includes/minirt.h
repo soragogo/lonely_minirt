@@ -72,6 +72,16 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
+typedef struct s_info
+{
+    double d;
+    t_elem obj;
+    t_vec xed_pt;
+    t_vec to_light;
+    t_vec normal;
+} t_info;
+
+
 /*vector*/
 t_vec          vec_init(double x, double y, double z);
 t_vec          vec_add(t_vec a, t_vec b);
@@ -154,6 +164,14 @@ int create_rgb(int r, int g, int b);
 int create_rgb_from_fcolor(t_fcolor color);
 t_fcolor color_init(unsigned char r, unsigned char g, unsigned char b);
 
+/*render_light*/
+void render_light(t_world *world, t_info *closest, t_fcolor *color);
+
 /*render_ambient*/
-void render_ambient(double *ambient, t_fcolor *color);
+void render_ambient(double *ambient, double *rgb);
+
+/*render_utils*/
+double find_sp_hit(t_elem obj, t_vec coor, t_vec dir_vec);
+double find_pl_hit(t_elem obj, t_vec coor, t_vec dir_vec);
+double find_cy_hit(t_elem obj, t_vec coor, t_vec dir_vec);
 #endif

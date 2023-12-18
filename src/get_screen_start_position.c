@@ -5,6 +5,13 @@ t_vec get_screen_horizon_vec(t_vec normal)
     t_vec ret;
     double mag;
 
+    if (!normal.x && !normal.y)
+    {
+        ret.x = normal.z;
+        ret.y = 0;
+        ret.z = 0;
+        return (ret);
+    }
     ret.x = -normal.y;
     ret.y = normal.x;
     ret.z = 0;
@@ -22,6 +29,13 @@ t_vec get_screen_vertical_vec(t_vec normal)
     t_vec ret;
     double mag;
 
+    if (!normal.y && !normal.z)
+    {
+        ret.x = 0;
+        ret.y = 0;
+        ret.z = normal.x;
+        return (ret);
+    }
     ret.x = 0;
     ret.y = -normal.z;
     ret.z = normal.y;

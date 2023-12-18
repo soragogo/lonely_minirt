@@ -1,8 +1,13 @@
 #include "../includes/minirt.h"
 
-void render_ambient(double *ambient, t_fcolor *color)
+void render_ambient(double *ambient, double *rgb)
 {
-    color->r = (unsigned char)((double)color->r * ambient[0]);
-    color->g = (unsigned char)((double)color->g * ambient[1]);
-    color->b = (unsigned char)((double)color->b * ambient[2]);
+    int i = 0;
+    while (i < 3)
+    {
+        rgb[i] += ambient[i];
+        if (rgb[i] > 1)
+            rgb[i] = 0;
+        i++;
+    }
 }
