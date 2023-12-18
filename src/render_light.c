@@ -1,29 +1,6 @@
 #include "../includes/minirt.h"
 
-bool is_shed(t_world *world, t_vec coor, t_vec dir_vec)
-{
-    t_elem *obj;
-    obj = world->objs;
-    double obj_hit;
 
-    obj_hit = -1;
-
-    while (obj)
-    {
-        if (!ft_strncmp(obj->obj, "sp", 2))
-            obj_hit = find_sp_hit(*obj, vec_add(coor, vec_mult(dir_vec, 0.00001)), dir_vec);
-        else if (!ft_strncmp(obj->obj, "pl", 2))
-            obj_hit = find_pl_hit(*obj, vec_add(coor, vec_mult(dir_vec, 0.00001)), dir_vec);
-        else if (!ft_strncmp(obj->obj, "cy", 2))
-            obj_hit = find_cy_hit(*obj, vec_add(coor, vec_mult(dir_vec, 0.00001)), dir_vec);
-        if (obj_hit != -1 && obj_hit < vec_mag(vec_sub(world->light.coor, coor)))
-        {
-            return true;
-        }
-        obj = obj->next;
-    }
-    return false;
-}
 
 t_vec caliculate_surface_normal(t_world *world, t_info *closest)
 {
@@ -45,8 +22,56 @@ t_vec caliculate_surface_normal(t_world *world, t_info *closest)
         core = vec_add(core, vec_mult(closest->obj.vec, s));
         return (vec_normalize(vec_sub(closest->xed_pt, core)));
     }
-
 }
+
+bool light_unreachable(t_world *world, t_info *closest)
+{
+    if (strncmp(closest->obj.obj, "cy", 2))
+        return true;
+    t_vec normal;
+    normal = caliculate_surface_normal(world, closest);
+
+    double camera_pos;
+    double light_pos;
+
+    camera_pos = vec_dot(normal, world->camera.coor) - vec_dot(normal, closest->xed_pt);
+    light_pos = vec_dot(normal, world->light.coor) - vec_dot(normal, closest->xed_pt);
+
+    if (camera_pos * light_pos <= 0)
+        return (true);
+    else
+        return (false);
+}
+bool is_shed(t_world *world, t_info *closest)
+{
+    t_vec coor =closest->xed_pt;
+    t_vec dir_vec = closest->to_light;
+    t_elem *obj;
+    obj = world->objs;
+    double obj_hit;
+
+    obj_hit = -1;
+
+    while (obj)
+    {
+        if (!ft_strncmp(obj->obj, "sp", 2))
+            obj_hit = find_sp_hit(*obj, vec_add(coor, vec_mult(dir_vec, 0.00001)), dir_vec);
+        else if (!ft_strncmp(obj->obj, "pl", 2))
+            obj_hit = find_pl_hit(*obj, vec_add(coor, vec_mult(dir_vec, 0.00001)), dir_vec);
+        else if (!ft_strncmp(obj->obj, "cy", 2))
+        {
+            obj_hit = find_cy_hit(*obj, vec_add(coor, vec_mult(dir_vec, 0.00001)), dir_vec);
+        }
+        if (obj_hit != -1 && obj_hit < vec_mag(vec_sub(world->light.coor, coor)))
+        {
+            return true;
+        }
+        obj = obj->next;
+    }
+    return false;
+}
+
+
 
 void light_init(double *rgb, double coefficient, double *original)
 {
@@ -67,9 +92,8 @@ void render_light(t_world *world, t_info *closest, t_fcolor *color)
     double rgb[3];
     closest->to_light = vec_normalize(vec_sub(world->light.coor, closest->xed_pt));
     light_init(rgb, 0, NULL);
-    if (!is_shed(world, closest->xed_pt, closest->to_light))
+    if (!light_unreachable(world, closest) && !is_shed(world, closest))
     {
-
         closest->normal = caliculate_surface_normal(world, closest);
         double cos = vec_dot(closest->to_light, closest->normal);
         if (cos < 0)
